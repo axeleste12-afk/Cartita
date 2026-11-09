@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi niña bonita</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Georgia', serif;
+    color: white;
+    background: linear-gradient(135deg, #080d29, #171044, #30134d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+
+.stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.2;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+
+.moon {
+    position: fixed;
+    top: 55px;
+    right: 10%;
+    width: 75px;
+    height: 75px;
+    background: #fff4d6;
+    border-radius: 50%;
+    box-shadow: 0 0 35px rgba(255, 244, 214, 0.6);
+    z-index: 1;
+}
+
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    padding: 35px 25px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 40px rgba(135, 90, 255, 0.2);
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f4dcff;
+    text-shadow: 0 0 15px rgba(220, 170, 255, 0.5);
+}
+
+.description {
+    color: #ded5f5;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+
+button {
+    border: none;
+    padding: 13px 25px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #a56bdb, #d18bdc);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(190, 120, 255, 0.3);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(220, 160, 255, 0.6);
+}
+
+
+.letter {
+    display: none;
+    margin-top: 30px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 18px;
+    line-height: 1.8;
+    color: #f4eaff;
+    text-align: left;
+    animation: appear 1s ease;
+}
+
+.letter h2 {
+    text-align: center;
+    color: #f3caff;
+    margin-bottom: 20px;
+}
+
+.letter p {
+    margin-bottom: 15px;
+}
+
+.signature {
+    text-align: right;
+    margin-top: 25px;
+    color: #e8c4ff;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.5);
+    animation: sparkleFloat 3s linear forwards;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
+}
+
+
+.music-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 5;
+    padding: 10px 17px;
+    font-size: 0.9rem;
+    background: rgba(150, 100, 210, 0.85);
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .container {
+        padding: 25px 18px;
+    }
+
+    .moon {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="moon"></div>
+
+<audio id="musica" src="./mania.mp3" loop preload="auto"></audio>
+
+<button class="music-button" id="musicButton"
+onclick="toggleMusic()" style="display:none;">
+Pausar música
+</button>
+
+<div class="container">
+
+    <h1>Para mi niña bonita</h1>
+
+    <p class="description">
+        Hay algo que quiero decirte y preparé este pequeño espacio
+        especialmente para ti.
+    </p>
+
+    <button onclick="openLetter()">
+        Abrir mi carta
+    </button>
+
+    
+<div class="letter" id="letter">
+
+    <h2>Una carta para ti</h2>
+
+    <p>
+        Antes que nada quiero que sepas que hice este pequeño
+        espacio pensando en ti. Tal vez no sea el regalo más grande
+        del mundo pero está hecho con mucho cariño y con la intención
+        de recordarte lo importante que eres para mí.
+    </p>
+
+    <p>
+        A veces me cuesta encontrar las palabras exactas para explicar
+        todo lo que siento por ti. Hay tantas cosas que quisiera decirte
+        que no sé por dónde empezar pero quiero intentarlo porque
+        mereces saber lo especial que eres en mi vida.
+    </p>
+
+    <p>
+        Desde que llegaste mis días tienen algo diferente. Incluso
+        los momentos más sencillos pueden convertirse en recuerdos
+        bonitos cuando los comparto contigo. Una conversación,
+        una sonrisa un mensaje o simplemente saber que estás ahí
+        puede hacer que mi día sea mucho mejor.
+    </p>
+
+    <p>
+        Me encanta tu forma de ser, tu manera de hablar, tus ocurrencias
+        y esos pequeños detalles que quizá tú no notas pero que para
+        mí tienen muchísimo valor. No tienes que hacer algo extraordinario
+        para hacerme feliz muchas veces basta con que seas tú misma.
+    </p>
+
+    <p>
+        Quiero que tengas presente que no necesitas ser perfecta.
+        No espero que todos tus días sean buenos ni que siempre
+        tengas una sonrisa. También quiero estar contigo en los días
+        difíciles, escucharte cuando necesites hablar y acompañarte
+        cuando las cosas no salgan como esperabas.
+    </p>
+
+    <p>
+        Quiero conocerte cada día un poquito más, descubrir tus sueños,
+        escuchar tus historias aprender qué cosas te hacen feliz
+        y compartir contigo muchos momentos que algún día podamos
+        recordar con una sonrisa.
+    </p>
+
+    <p>
+        Si alguna vez dudas de lo mucho que significas para mí
+        recuerda que eres una persona muy especial. Aprecio cada
+        momento que compartimos y cada oportunidad que tengo
+        de demostrarte mi cariño.
+    </p>
+
+    <p>
+        No puedo prometerte que todo será perfecto porque sé que
+        la vida tiene días buenos y días complicados. Pero sí quiero
+        esforzarme por cuidar lo que tenemos, hablar contigo con
+        sinceridad, respetarte y demostrarte con hechos lo importante
+        que eres para mí.
+    </p>
+
+    <p>
+        También quiero agradecerte por tu tiempo, por tus palabras,
+        por tus sonrisas y por cada pequeño detalle que has tenido
+        conmigo. Quizá algunas cosas parezcan pequeñas, pero yo
+        las guardo con mucho cariño.
+    </p>
+
+    <p>
+        Ojalá podamos seguir acumulando recuerdos, teniendo
+        conversaciones interminables, riéndonos de cualquier cosa
+        y disfrutando de esos momentos que hacen que todo valga
+        la pena.
+    </p>
+
+    <p>
+        Si pudiera pedir algo, sería que nunca dejemos de conocernos,
+        de apoyarnos y de encontrar motivos para sonreír juntos.
+        Quiero que cada día podamos construir algo bonito,
+        sin prisas y disfrutando de lo que compartimos.
+    </p>
+
+    <p>
+        Quiero que cuando leas esto recuerdes que hay alguien
+        que piensa en ti con muchísimo cariño, que se alegra
+        de tenerte en su vida y que está agradecido por haberte
+        conocido.
+    </p>
+
+    <p>
+        Tal vez estas palabras no alcancen para expresar todo
+        lo que siento, pero cada una de ellas está escrita
+        pensando en ti. Espero que esta pequeña sorpresa
+        te recuerde lo mucho que te quiero.
+    </p>
+
+    <p>
+        Gracias por ser tú, por llegar a mi vida y por permitirme
+        compartir una parte de la mía contigo. Eres alguien
+        que quiero cuidar y valorar muchísimo.
+    </p>
+
+    <p>
+        Y si tuviera que volver a elegir, volvería a elegir
+        conocerte, volvería a elegir cada conversación y cada
+        recuerdo que hemos creado.
+    </p>
+
+    <div class="signature">
+        Con muchísimo cariño,<br>
+        Tu niño que te ama muchísimo
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+
+const starsContainer = document.getElementById("stars");
+
+for (let i = 0; i < 120; i++) {
+    const star = document.createElement("div");
+
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+
+    starsContainer.appendChild(star);
+}
+
+async function openLetter() {
+
+    const letter = document.getElementById("letter");
+    const musica = document.getElementById("musica");
+    const musicButton = document.getElementById("musicButton");
+
+    letter.style.display = "block";
+    musicButton.style.display = "block";
+
+    letter.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+    musica.volume = 0.5;
+
+    try {
+        await musica.play();
+        musicButton.textContent = "Pausar música";
+    } catch (error) {
+        musicButton.textContent = "Reproducir música";
+        console.log("No se pudo reproducir la música:", error);
+    }
+
+    createSparkles();
+}
+
+
+async function toggleMusic() {
+
+    const musica = document.getElementById("musica");
+    const musicButton = document.getElementById("musicButton");
+
+    if (musica.paused) {
+        try {
+            await musica.play();
+            musicButton.textContent = "Pausar música";
+        } catch (error) {
+            console.log("No se pudo reproducir la música:", error);
+        }
+    } else {
+        musica.pause();
+        musicButton.textContent = "Reproducir música";
+    }
+}
+
+
+function createSparkles() {
+
+    setInterval(() => {
+
+        const sparkle = document.createElement("div");
+
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = (60 + Math.random() * 35) + "vh";
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+            sparkle.remove();
+        }, 3000);
+
+    }, 350);
+}
+
+</script>
+
+</body>
+</html>
